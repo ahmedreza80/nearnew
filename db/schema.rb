@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190313175908) do
+ActiveRecord::Schema.define(version: 20190426235449) do
 
   create_table "order_items", force: :cascade do |t|
-    t.integer "order_id"
-    t.integer "product_id"
+    t.bigint "order_id", null: false
+    t.bigint "product_id", null: false
     t.integer "quantity", null: false
     t.decimal "price", precision: 15, scale: 2, null: false
     t.datetime "created_at", null: false
@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20190313175908) do
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
-    t.integer "shop_id"
+    t.bigint "user_id", null: false
+    t.bigint "shop_id", null: false
     t.index ["shop_id"], name: "index_products_on_shop_id"
   end
 
@@ -68,7 +68,7 @@ ActiveRecord::Schema.define(version: 20190313175908) do
     t.string "category"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
+    t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_shops_on_user_id"
   end
 
@@ -88,4 +88,9 @@ ActiveRecord::Schema.define(version: 20190313175908) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "order_items", "orders", name: "fk_order_items_on_order_id"
+  add_foreign_key "order_items", "products", name: "fk_order_items_on_product_id"
+  add_foreign_key "products", "shops", name: "fk_products_on_shop_id"
+  add_foreign_key "products", "users", name: "fk_products_on_user_id"
+  add_foreign_key "shops", "users", name: "fk_shops_on_user_id"
 end
