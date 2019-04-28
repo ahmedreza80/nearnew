@@ -7,7 +7,7 @@
 <%= form_with(model: product, local: true) do |form| %>
   <% if product.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
+      <h2><%= pluralize(product.errors.count, "error") %> prevented this product from being saved:</h2>
 
       <ul>
       <% product.errors.full_messages.each do |message| %>
@@ -21,17 +21,20 @@
 <form>
 <fieldset>
 <legend><span class="number">1</span> General Info</legend>
-<%= form.text_field :name, id: :product_name, placeholder: "Add name of your product or service here" %>
+<%= form.text_field :name,       id: :product_name, placeholder: "Add name of your product or service here" %>
 <%= form.text_area :description, id: :product_description, placeholder: "Full Description" %>
+<%= form.select :state_id, options_from_collection_for_select(states, :id, :name, product.state&.id), {include_blank: 'Select a state'}, class: 'js-state' %>
+<%= form.select :city_id,  options_from_collection_for_select(cities(product.state&.id), :id, :name, product.city&.id), {include_blank: 'Select a city'}, class: 'js-city' %>
+<%= form.select :location_id,  options_from_collection_for_select(cities(product.city&.id), :id, :name, product.location_id), {include_blank: 'Select a location'}, class: 'js-location' %>
 <label for="job" style="color:#000;">Images:</label>
-<%= form.file_field :image, id: :product_image %>
-<%= form.file_field :imagetwo, id: :product_image %>
+<%= form.file_field :image,      id: :product_image %>
+<%= form.file_field :imagetwo,   id: :product_image %>
 <%= form.file_field :imagethree, id: :product_image %>   
 </fieldset>
 <fieldset>
 <legend><span class="number">2</span> Additional Info</legend>
 <label for="job" style="color:#000;">Categories:</label>
-    <%= form.select :category, ['Electronics', 'Fashion', 'Furniture', 'Kitchen Stores', 'Restraunts', 'Hotels', 'General Stores', 'Grocery Stores'] %>
+   <%= form.select :category, ['Electronics', 'Fashion', 'Furniture', 'Kitchen Stores', 'Restaurants', 'Hotels', 'General Stores', 'Grocery Stores'] %>
 </fieldset>
 <fieldset>
 <legend><span class="number">3</span> Details</legend>

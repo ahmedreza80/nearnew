@@ -10,8 +10,20 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_cart
 
+  def states
+    @states ||= State.all
+  end
+  helper_method :states
 
+  def cities(state_id)
+    @cities ||= City.where(state_id: state_id)
+  end
+  helper_method :cities
 
+  def locations(city_id)
+    @locations ||= Location.where(city_id: city_id)
+  end
+  helper_method :locations
 
   private
 
@@ -21,4 +33,5 @@ class ApplicationController < ActionController::Base
     session[:cart_token] ||= SecureRandom.hex(8)
     @cart_token = session[:cart_token]
   end
+
 end

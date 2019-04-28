@@ -11,8 +11,11 @@ get '/cart', to: 'order_items#index'
   patch '/cart/checkout', to: 'orders#create'
    get '/cart/tracking', to: 'orders#show', as: :tracking
 
-
-
+  resources :states, only: [] do
+    resources :cities, shallow: true, only: :index do
+      resources :locations, only: :index
+    end
+  end
   
   get 'welcome/home'
   root "welcome#home"
