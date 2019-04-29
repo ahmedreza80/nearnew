@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190313175908) do
+ActiveRecord::Schema.define(version: 20190428122139) do
 
   create_table "order_items", force: :cascade do |t|
     t.integer "order_id"
@@ -56,6 +56,10 @@ ActiveRecord::Schema.define(version: 20190313175908) do
     t.index ["shop_id"], name: "index_products_on_shop_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -84,8 +88,10 @@ ActiveRecord::Schema.define(version: 20190313175908) do
     t.string "phone"
     t.string "location"
     t.string "pincode"
+    t.bigint "role_id", default: 3, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "users", "roles", name: "fk_users_on_role_id"
 end
