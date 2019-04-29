@@ -1,17 +1,16 @@
 Rails.application.routes.draw do
   resources :shops
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+  devise_for :users,  controllers: { registrations: 'users/registrations' }
   resources :products
 
+  get  'users/new_agent'
+  post 'users/create_agent'
 
-
-get '/cart', to: 'order_items#index'
+  get '/cart', to: 'order_items#index'
   resources :order_items, path: '/cart/items'
   get '/cart/checkout', to: 'orders#new', as: :checkout
   patch '/cart/checkout', to: 'orders#create'
-   get '/cart/tracking', to: 'orders#show', as: :tracking
-
-
+  get '/cart/tracking', to: 'orders#show', as: :tracking
 
   
   get 'welcome/home'

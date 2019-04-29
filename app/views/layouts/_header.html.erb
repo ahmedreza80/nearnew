@@ -79,29 +79,27 @@ function closeNav() {
                     <div class="col-md-12">
                         <nav class="navbar navbar-expand-lg navbar-light">
 
-                           
-                            
                             <img src="/assets/user.png"  onclick="openNav()" style="height:40px; width:40px;">
 
 <a href="/cart">
             <img src="https://cdn4.iconfinder.com/data/icons/online-shopping-31/64/shopping-commerce-supermarket-cart-store-online-512.png" style="height:40px; width:40px;"  alt="ICON">
                            </a>
                             <a class="navbar-brand" style="font-size:20px;" href="/">NearClick</a>
-                            
+
                           <img src="/assets/mi.png" data-toggle="modal" data-target="#myModalse" style="height:40px; width:40px;">
 
 
 
                            <!-- Modal -->
 
-                           
+
 
                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <img src="/assets/dots.png" style="height:30px; width:30px;">
               </button>
                             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                                 <ul class="navbar-nav">
-                                     
+
 
 
                                      <li class="nav-item active">
@@ -203,7 +201,7 @@ function closeNav() {
                                         </div>
                                     </li>
 
-                                   
+
 
                                    <li class="nav-item dropdown">
                                         <a class="nav-link" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -239,7 +237,7 @@ function closeNav() {
                                             <a class="dropdown-item" href="#">Interior</a>
                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#myModalth">Furniture</a>
                                             <a class="dropdown-item" href="#">Painter</a>
-                                            
+
                                         </div>
                                     </li>
 
@@ -312,8 +310,8 @@ function closeNav() {
                                           <img src="http://pluspng.com/img-png/free-png-plus-sign-plus-sign-icon-button-green-approved-check-712.png" style="width:10px; height:10px;">
                                         </a>
                                     </li>
-                                    
-                                   
+
+
                                     <% if user_signed_in? %>
                                     <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-outline-light top-btn" %></li>
                                     <% else %>
@@ -334,7 +332,7 @@ function closeNav() {
   <br>
   <% if user_signed_in? %>
   <p style="text-align:center;">Welcome <%= current_user.username %></p>
-  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>  
+  <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
   <% else %>
   <p style="text-align:center;">Welcome Guest</p>
   <a href="/users/sign_in">Sign In</a>
@@ -348,11 +346,14 @@ function closeNav() {
   <% end %>
   <% if current_user&.shop %>
   <%= link_to 'Manage Shop', current_user.shop, class: "btn btn-danger" %>
-<% else %>
-                        <a href="/shops/new">Add Shop</a>
-                        <% end %>
-  <a href="/welcome/about">About</a>
-  <a href="/welcome/contact">Contact</a>
+  <% else %>
+  <%= link_to 'Add Shop', new_shop_path %>
+  <% end %>
+  <% if current_user&.admin? %>
+  <%= link_to 'Add Agent', users_new_agent_path %>
+  <% end %>
+  <%= link_to 'About', welcome_about_path %>
+  <%= link_to 'Contact', welcome_contact_path %>
 </div>
 
 <% else %>
@@ -438,10 +439,10 @@ function closeNav() {
                         <nav class="navbar navbar-expand-lg navbar-light">
                             <span style="font-size:30px;cursor:pointer; color:#fff;" onclick="openNav()">&#9776; </span>
                             <a class="navbar-brand" href="/">NearClick</a>
-                          
-                           
-                           
-                           
+
+
+
+
                             <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                                 <ul class="navbar-nav">
                                      <li class="nav-item active">
@@ -471,8 +472,8 @@ function closeNav() {
                                     <li class="nav-item active">
                                         <a class="nav-link" href="/welcome/events">Events</a>
                                     </li>
-                                    
-                                   
+
+
                                     <% if user_signed_in? %>
                                     <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "btn btn-outline-light top-btn" %></li>
                                     <% else %>
@@ -505,6 +506,9 @@ function closeNav() {
   <% else %>
   <a href="#"><span>0</span> Your Cart</a>
   <a href="#">Wishlist</a>
+  <% end %>
+  <% if current_user&.admin? %>
+  <%= link_to 'Add Agent', users_new_agent_path %>
   <% end %>
   <a href="/welcome/about">About</a>
   <a href="/welcome/contact">Contact</a>
